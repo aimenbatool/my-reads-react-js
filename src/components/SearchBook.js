@@ -7,9 +7,11 @@ class SearchBook extends Component{
 
     state = {
         query: '',
-        books: this.props.books,
         hasError: false,
     }
+
+    books = this.props.books;
+    searchedBooks = [];
 
     handleQuery = (event) => {
         this.setState({query: event.target.value});
@@ -17,19 +19,28 @@ class SearchBook extends Component{
     }
 
     searchBook = (query) => {
-        BooksAPI.search(query)
-        .then((fetchedData) => {
-          if(typeof fetchedData !== 'undefined') {
-            const books = Array.isArray(fetchedData) ? fetchedData : fetchedData.items;
-            this.setState({
-              books: books,
-              hasError: books.length === 0
-            })
-          }
-        })
-    }
+      let tempSearchBooks =[];
+      BooksAPI.search(query)
+      .then((fetchedData) => {
+        if(typeof fetchedData !== 'undefined') {
+          this.searchedBooks = Array.isArray(fetchedData) ? fetchedData : fetchedData.items;
+          this.searchedBooks.forEach(book => {
+            let tempBook = {};
+            BooksAPI.get( book.id )
+            .then( result => {
+              tempBook = result;
+              tempBook.shelf = result.shelf;
+              tempSearchBooks.push(tempBook);
+              this.books = tempSearchBooks;
+            } )
+          });
+          this.setState({
+            hasError: this.searchedBooks.length === 0
+          })
+        }
+      })
+  }
 
-    // lifting up the state
     handleUpdate = (book, shelf) => {
       this.props.updateShelf(book, shelf);
     }
@@ -48,18 +59,16 @@ class SearchBook extends Component{
               {
                 this.state.hasError && 'No record found.'
               }
-              {this.state.books.map((result, index) => (
+              {!this.state.hasError && this.books.filter( book => book.imageLinks).map((book, index) => {
+                return(
                   <li key={index}>
                       <Book
-                          title={result.title}
-                          authors={result.authors}
-                          url={result.imageLinks}
-                          book={result}
+                          book={book}
                           handleUpdate={this.handleUpdate}
-                          shelf={result.shelf}
                       />
                   </li>
-              ))}   
+                )
+              })}   
               </ol>
             </div>
           </div>

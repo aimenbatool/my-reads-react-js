@@ -16,9 +16,6 @@ const BookShelf = (props) => {
                     props.books.map( (book, index) => (
                         <li key={index}>
                             <Book
-                                title={book.title}
-                                authors={book.authors}
-                                url={book.imageLinks}
                                 book={book}
                                 handleUpdate={handleUpdate}
                             />
