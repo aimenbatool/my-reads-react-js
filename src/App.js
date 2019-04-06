@@ -19,12 +19,27 @@ class BooksApp extends React.Component {
   }
 
   updateShelf = (book, shelf) => {
+    let success = false;
+
     BooksAPI.update(book, shelf)
     .then( result => {
-      if(result.hasOwnProperty(shelf) && result[shelf].includes(book.id)) {
-        this.setState({shelf: shelf}) // update books
-      } else {
-        this.setState({shelf: 'none'})
+
+      if(shelf === 'none') {
+        success = result.hasOwnProperty(book.shelf) && result[book.shelf].includes(book.id) ? false : true;
+      }else {
+        success = result.hasOwnProperty(shelf) && result[shelf].includes(book.id) ? true : false;
+      }
+
+      if ( success ) {
+        let tempBooks = [...this.state.books];
+        const bookToUpdate = tempBooks.filter( tempBook => tempBook.id === book.id);
+        if(bookToUpdate.length > 0 ) {
+          bookToUpdate[0].shelf = shelf;
+          this.setState({books: tempBooks});
+        } else {
+          tempBooks = [...tempBooks, book];
+          this.setState({books: tempBooks});
+        }
       }
     })
   }
@@ -53,4 +68,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp
+export default BooksApp;

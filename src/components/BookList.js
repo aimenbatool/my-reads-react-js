@@ -34,8 +34,3 @@ const BookList = (props) => {
 }
 
 export default BookList;
-
-// get all books on booklist,
-// separately keep in array of shelf 
-// pass array to bookshelf with list of books of a specific category
-// and iterate over books in bookshelf
