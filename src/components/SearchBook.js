@@ -15,30 +15,33 @@ class SearchBook extends Component{
 
     handleQuery = (event) => {
         this.setState({query: event.target.value});
-        this.searchBook(this.state.query);
+        this.searchBook(event.target.value);
     }
 
     searchBook = (query) => {
       let tempSearchBooks =[];
-      BooksAPI.search(query)
-      .then((fetchedData) => {
-        if(typeof fetchedData !== 'undefined') {
-          this.searchedBooks = Array.isArray(fetchedData) ? fetchedData : fetchedData.items;
-          this.searchedBooks.forEach(book => {
-            let tempBook = {};
-            BooksAPI.get( book.id )
-            .then( result => {
-              tempBook = result;
-              tempBook.shelf = result.shelf;
-              tempSearchBooks.push(tempBook);
-              this.books = tempSearchBooks;
-            } )
-          });
-          this.setState({
-            hasError: this.searchedBooks.length === 0
-          })
-        }
-      })
+
+      query === '' ? 
+        this.books = [] :
+        BooksAPI.search(query)
+        .then((fetchedData) => {
+          if(typeof fetchedData !== 'undefined') {
+            this.searchedBooks = Array.isArray(fetchedData) ? fetchedData : fetchedData.items;
+            this.searchedBooks.forEach(book => {
+              let tempBook = {};
+              BooksAPI.get( book.id )
+              .then( result => {
+                tempBook = result;
+                tempBook.shelf = result.shelf;
+                tempSearchBooks.push(tempBook);
+                this.books = tempSearchBooks;
+              } )
+            });
+            this.setState({
+              hasError: this.searchedBooks.length === 0
+            })
+          }
+        })
   }
 
     handleUpdate = (book, shelf) => {
