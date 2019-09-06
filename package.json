@@ -3,11 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "handlebars": "^4.0.14",
+    "lodash": "^4.17.13",
+    "lodash.template": "^4.5.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.1"
+    "react-scripts": "^2.1.8",
+    "set-value": "^2.0.1",
+    "webpack-dev-server": "^3.1.11"
   },
   "scripts": {
     "start": "react-scripts start",
