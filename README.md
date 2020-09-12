@@ -1,24 +1,24 @@
 # MyReads Project
 
-A [web application](https://dreamy-nightingale-14f3eb.netlify.com/) which allows you to categorized the books you have read, want to read or currently reading. The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md).
-
+A [web application](https://dreamy-nightingale-14f3eb.netlify.com/) which allows you to categorize the books you have read, want to read or currently reading. The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md).
 
 ## Setup Instructions
+
 To get started developing right away:
 
-* install all project dependencies with `npm install` or `yarn install`
-* start the development server with `npm start` or `yarn start`
-* Navigate to `http://localhost:3000/`
-
+- install all project dependencies with `npm install` or `yarn install`
+- start the development server with `npm start` or `yarn start`
+- Navigate to `http://localhost:3000/`
 
 ## Functionality
-* Search books against a keyword
-* Add book to a shelf
-* Update shelf and apply changes globally
-* Remove book from shelf
 
+- Search books against a keyword
+- Add book to a shelf
+- Update shelf and apply changes globally
+- Remove book from shelf
 
 ## Code Structure
+
 ```bash
 ├── CONTRIBUTING.md
 ├── README.md - This file.
@@ -32,9 +32,9 @@ To get started developing right away:
     ├── App.js # This is the root of the app. Contains static HTML right now.
     ├── App.test.js # Used for testing. Provided with Create React App.
     ├── BooksAPI.js # A JavaScript API for the provided backend. Instructions for the methods are below.
-    ├── components 
+    ├── components
     │   ├── Book.js
-        ├── BookList.js 
+        ├── BookList.js
         ├── BookShelf.js
     │   ├── SearchBook.js
     ├── icons # Helpful images for the app.
@@ -49,44 +49,44 @@ To get started developing right away:
 
 The file [`BooksAPI.js`](src/BooksAPI.js) contains the methods required to perform necessary operations on the backend:
 
-* [`getAll`](#getall)
-* [`update`](#update)
-* [`search`](#search)
+- [`getAll`](#getall)
+- [`update`](#update)
+- [`search`](#search)
 
 ### `getAll`
 
 Method Signature:
 
 ```js
-getAll()
+getAll();
 ```
 
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
+- Returns a Promise which resolves to a JSON object containing a collection of book objects.
+- This collection represents the books currently in the bookshelves in your app.
 
 ### `update`
 
 Method Signature:
 
 ```js
-update(book, shelf)
+update(book, shelf);
 ```
 
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
+- book: `<Object>` containing at minimum an `id` attribute
+- shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]
+- Returns a Promise which resolves to a JSON object containing the response data of the POST request
 
 ### `search`
 
 Method Signature:
 
 ```js
-search(query)
+search(query);
 ```
 
-* query: `<String>`
-* Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
+- query: `<String>`
+- Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
+- These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
 
 ## Create React App
 
